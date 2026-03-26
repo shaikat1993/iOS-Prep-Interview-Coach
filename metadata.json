@@ -1,0 +1,5 @@
+{
+  "name": "iOS Concept Deep-Diver",
+  "description": "An interactive learning platform for senior iOS engineering concepts, featuring deep-dives into Swift, Combine, and memory management with AI-generated diagrams.",
+  "requestFramePermissions": []
+}

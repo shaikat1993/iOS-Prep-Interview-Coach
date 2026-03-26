@@ -1,0 +1,48 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: stats
+    // Document ID: global
+    // Fields:
+    //   - visitorCount: number (required) - Total number of unique visits
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isValidStats(data) {
+      return data.keys().hasAll(['visitorCount']) &&
+             data.visitorCount is number &&
+             data.visitorCount >= 0;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /stats/global {
+      // Allow anyone to read the visitor count (explicitly requested by "how many people visited")
+      allow read: if true;
+      
+      // Allow incrementing the visitor count
+      allow create: if isValidStats(request.resource.data);
+      allow update: if isValidStats(request.resource.data) &&
+                      request.resource.data.visitorCount == resource.data.visitorCount + 1;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,159 @@
+[
+  {
+    "id": 0,
+    "author": "user",
+    "payload": {
+      "type": "text",
+      "text": "Concept deep-dives:  \"Explain Combine framework with Publisher and Subscriber\" \"What is @Published property wrapper and how does it work?\" \"Explain weak vs unowned vs strong in Swift closures\" \"What is Timer in iOS and how does it work with RunLoop?\" \"Explain retain cycles and how to prevent them\"  Draw diagrams of retain cycles",
+      "files": [],
+      "fileUploads": [],
+      "cMarkNode": {}
+    },
+    "createdTimestamp": {
+      "seconds": 1770920833,
+      "nanos": 512000000
+    }
+  },
+  {
+    "id": 1,
+    "author": "model",
+    "payload": {
+      "type": "thinking",
+      "text": "**Defining the Application's Focus**\n\nI'm solidifying the core concept: a React-based \"Concept Deep-Dive\" explorer tailored for iOS/Swift development. I've narrowed the topics to focus on key areas: Combine (Publisher/Subscriber), the @Published property wrapper, and memory management specifically within closures (weak/unowned/strong). My next step is to outline the application's structure.\n\n\n**Expanding the Feature Set**\n\nI'm now integrating crucial features: a browsing interface, Gemini API integration for deep dives, diagram support (D3 or SVG), a Tailwind-based UI, and interactive exploration. The tech stack is React, TypeScript, Tailwind, Google's GenAI, D3 or SVG, and markdown rendering. The plan is in place for metadata, HTML, entry, the main app, topic cards, and the content component. I'm focusing on \"Timer and RunLoop\" and \"Retain Cycles\".\n\n\n",
+      "cMarkNode": {}
+    },
+    "createdTimestamp": {
+      "seconds": 1770920833,
+      "nanos": 512000000
+    },
+    "doneTimestamp": {
+      "seconds": 1770920838,
+      "nanos": 823000000
+    }
+  },
+  {
+    "id": 2,
+    "author": "model",
+    "payload": {
+      "type": "generationTable",
+      "entries": [
+        {
+          "path": "metadata.json",
+          "generationType": 0,
+          "isDone": true,
+          "description": "Project metadata including name and description.",
+          "diffs": [
+            {
+              "target": "",
+              "replacement": "\n{\n  \"name\": \"iOS Concept Deep-Diver\",\n  \"description\": \"An interactive learning platform for senior iOS engineering concepts, featuring deep-dives into Swift, Combine, and memory management with AI-generated diagrams.\"\n}\n"
+            }
+          ]
+        },
+        {
+          "path": "index.html",
+          "generationType": 0,
+          "isDone": true,
+          "description": "Main HTML entry point with Tailwind CSS and root element.",
+          "diffs": [
+            {
+              "target": "",
+              "replacement": "\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>iOS Concept Deep-Diver</title>\n    <script src=\"https://cdn.tailwindcss.com\"></script>\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n    <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap\" rel=\"stylesheet\">\n    <style>\n        body { font-family: 'Inter', sans-serif; }\n        code { font-family: 'JetBrains Mono', monospace; }\n        .markdown-content h1 { @apply text-3xl font-bold mb-4 text-slate-900; }\n        .markdown-content h2 { @apply text-2xl font-semibold mb-3 mt-6 text-slate-800 border-b pb-2; }\n        .markdown-content h3 { @apply text-xl font-medium mb-2 mt-4 text-slate-700; }\n        .markdown-content p { @apply mb-4 text-slate-600 leading-relaxed; }\n        .markdown-content ul { @apply list-disc ml-6 mb-4 text-slate-600; }\n        .markdown-content li { @apply mb-1; }\n        .markdown-content pre { @apply bg-slate-900 text-slate-50 p-4 rounded-lg overflow-x-auto mb-4; }\n        .markdown-content code { @apply bg-slate-100 text-indigo-600 px-1 py-0.5 rounded text-sm; }\n        .markdown-content pre code { @apply bg-transparent text-inherit p-0; }\n    </style>\n</head>\n<body class=\"bg-slate-50 text-slate-900\">\n    <div id=\"root\"></div>\n</body>\n</html>\n"
+            }
+          ]
+        },
+        {
+          "path": "index.tsx",
+          "generationType": 0,
+          "isDone": true,
+          "description": "React entry point initializing the root application component.",
+          "diffs": [
+            {
+              "target": "",
+              "replacement": "\nimport React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport App from './App';\n\nconst rootElement = document.getElementById('root');\nif (!rootElement) {\n  throw new Error(\"Could not find root element to mount to\");\n}\n\nconst root = ReactDOM.createRoot(rootElement);\nroot.render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>\n);\n"
+            }
+          ]
+        },
+        {
+          "path": "types.ts",
+          "generationType": 0,
+          "isDone": true,
+          "description": "Global type definitions for the application.",
+          "diffs": [
+            {
+              "target": "",
+              "replacement": "\nexport interface Topic {\n  id: string;\n  title: string;\n  query: string;\n  description: string;\n  icon: string;\n}\n\nexport interface DiagramNode {\n  id: string;\n  label: string;\n  type: 'object' | 'closure' | 'reference';\n}\n\nexport interface DiagramLink {\n  source: string;\n  target: string;\n  label: string;\n  strength: 'strong' | 'weak' | 'unowned';\n}\n\nexport interface DeepDiveResponse {\n  content: string;\n  diagramData?: {\n    nodes: DiagramNode[];\n    links: DiagramLink[];\n  };\n}\n"
+            }
+          ]
+        },
+        {
+          "path": "constants.tsx",
+          "generationType": 0,
+          "isDone": true,
+          "description": "Constant values and initial topic data.",
+          "diffs": [
+            {
+              "target": "",
+              "replacement": "\nimport { Topic } from './types';\n\nexport const TOPICS: Topic[] = [\n  {\n    id: 'combine',\n    title: 'Combine Framework',\n    query: 'Explain Combine framework with Publisher and Subscriber in depth with code examples.',\n    description: 'Learn the reactive programming paradigm in iOS using Publishers and Subscribers.',\n    icon: '⚡'\n  },\n  {\n    id: 'published',\n    title: '@Published Property Wrapper',\n    query: 'What is @Published property wrapper and how does it work internally in Swift?',\n    description: 'Understand how @Published automates observation in Combine.',\n    icon: '🏷️'\n  },\n  {\n    id: 'closures-memory',\n    title: 'Closure Capture Lists',\n    query: 'Explain weak vs unowned vs strong in Swift closures with clear examples and use cases.',\n    description: 'Master memory management within Swift closures.',\n    icon: '🔒'\n  },\n  {\n    id: 'timer-runloop',\n    title: 'Timer & RunLoop',\n    query: 'What is Timer in iOS and how does it work with RunLoop? Explain scheduling and common pitfalls.',\n    description: 'Deep dive into timing mechanisms and main thread loops.',\n    icon: '⏲️'\n  },\n  {\n    id: 'retain-cycles',\n    title: 'Retain Cycles',\n    query: 'Explain retain cycles, how to prevent them, and provide a detailed diagram structure for a typical cycle.',\n    description: 'Identifying and breaking circular strong references.',\n    icon: '♻️'\n  }\n];\n"
+            }
+          ]
+        },
+        {
+          "path": "services/geminiService.ts",
+          "generationType": 0,
+          "isDone": true,
+          "description": "Service to interact with the Gemini API for content and diagram data generation.",
+          "diffs": [
+            {
+              "target": "",
+              "replacement": "\nimport { GoogleGenAI, Type } from \"@google/genai\";\nimport { DeepDiveResponse } from \"../types\";\n\nconst ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });\n\nexport const getDeepDive = async (topicQuery: string): Promise<DeepDiveResponse> => {\n  const model = 'gemini-3-flash-preview';\n  \n  const systemInstruction = `\n    You are a world-class Senior iOS Engineer and Mentor. \n    Explain concepts with deep technical accuracy, code examples, and clear analogies.\n    \n    If the topic involves memory management or retain cycles, you MUST also provide a JSON block \n    at the end of your response for a diagram visualization.\n    \n    The JSON should follow this structure:\n    {\n      \"nodes\": [{\"id\": \"A\", \"label\": \"ViewController\", \"type\": \"object\"}],\n      \"links\": [{\"source\": \"A\", \"target\": \"B\", \"label\": \"owns\", \"strength\": \"strong\"}]\n    }\n    \n    Valid strengths are: 'strong', 'weak', 'unowned'.\n    Valid types are: 'object', 'closure'.\n    \n    Keep the explanation in Markdown format.\n  `;\n\n  const response = await ai.models.generateContent({\n    model,\n    contents: topicQuery,\n    config: {\n      systemInstruction,\n      temperature: 0.7,\n    },\n  });\n\n  const text = response.text || \"No explanation generated.\";\n  \n  // Attempt to extract JSON for diagrams\n  const jsonMatch = text.match(/```json\\n([\\s\\S]*?)\\n```/) || text.match(/{[\\s\\S]*?\"nodes\"[\\s\\S]*?}/);\n  let diagramData;\n  let cleanContent = text;\n\n  if (jsonMatch) {\n    try {\n      const jsonStr = jsonMatch[1] || jsonMatch[0];\n      diagramData = JSON.parse(jsonStr);\n      // Remove JSON block from visual content\n      cleanContent = text.replace(jsonMatch[0], '').trim();\n    } catch (e) {\n      console.error(\"Failed to parse diagram JSON\", e);\n    }\n  }\n\n  return {\n    content: cleanContent,\n    diagramData\n  };\n};\n"
+            }
+          ]
+        },
+        {
+          "path": "components/MemoryDiagram.tsx",
+          "generationType": 0,
+          "isDone": true,
+          "description": "Interactive diagram component using D3 to visualize object relationships and retain cycles.",
+          "diffs": [
+            {
+              "target": "",
+              "replacement": "\nimport React, { useEffect, useRef } from 'react';\nimport * as d3 from 'd3';\nimport { DiagramNode, DiagramLink } from '../types';\n\ninterface MemoryDiagramProps {\n  nodes: DiagramNode[];\n  links: DiagramLink[];\n}\n\nconst MemoryDiagram: React.FC<MemoryDiagramProps> = ({ nodes, links }) => {\n  const svgRef = useRef<SVGSVGElement>(null);\n\n  useEffect(() => {\n    if (!svgRef.current || !nodes.length) return;\n\n    const width = 600;\n    const height = 400;\n\n    const svg = d3.select(svgRef.current)\n      .attr('viewBox', [0, 0, width, height] as any)\n      .attr('style', 'max-width: 100%; height: auto;');\n\n    svg.selectAll('*').remove();\n\n    // Define marker for arrows\n    svg.append('defs').append('marker')\n      .attr('id', 'arrowhead')\n      .attr('viewBox', '-0 -5 10 10')\n      .attr('refX', 20)\n      .attr('refY', 0)\n      .attr('orient', 'auto')\n      .attr('markerWidth', 6)\n      .attr('markerHeight', 6)\n      .attr('xoverflow', 'visible')\n      .append('svg:path')\n      .attr('d', 'M 0,-5 L 10 ,0 L 0,5')\n      .attr('fill', '#94a3b8')\n      .style('stroke', 'none');\n\n    const simulation = d3.forceSimulation(nodes as any)\n      .force('link', d3.forceLink(links).id((d: any) => d.id).distance(150))\n      .force('charge', d3.forceManyBody().strength(-300))\n      .force('center', d3.forceCenter(width / 2, height / 2));\n\n    const link = svg.append('g')\n      .selectAll('line')\n      .data(links)\n      .join('line')\n      .attr('stroke', (d: any) => d.strength === 'strong' ? '#ef4444' : '#10b981')\n      .attr('stroke-opacity', 0.6)\n      .attr('stroke-width', (d: any) => d.strength === 'strong' ? 3 : 1.5)\n      .attr('stroke-dasharray', (d: any) => d.strength === 'weak' ? '5,5' : '0')\n      .attr('marker-end', 'url(#arrowhead)');\n\n    const node = svg.append('g')\n      .selectAll('g')\n      .data(nodes)\n      .join('g')\n      .call(d3.drag<any, any>()\n        .on('start', dragstarted)\n        .on('drag', dragged)\n        .on('end', dragended) as any);\n\n    node.append('circle')\n      .attr('r', 35)\n      .attr('fill', (d: any) => d.type === 'closure' ? '#fde047' : '#ffffff')\n      .attr('stroke', '#475569')\n      .attr('stroke-width', 2);\n\n    node.append('text')\n      .text((d: any) => d.label)\n      .attr('text-anchor', 'middle')\n      .attr('dy', '.35em')\n      .attr('class', 'text-xs font-bold fill-slate-700 pointer-events-none')\n      .style('font-size', '10px');\n\n    simulation.on('tick', () => {\n      link\n        .attr('x1', (d: any) => d.source.x)\n        .attr('y1', (d: any) => d.source.y)\n        .attr('x2', (d: any) => d.target.x)\n        .attr('y2', (d: any) => d.target.y);\n\n      node.attr('transform', (d: any) => `translate(${d.x},${d.y})`);\n    });\n\n    function dragstarted(event: any) {\n      if (!event.active) simulation.alphaTarget(0.3).restart();\n      event.subject.fx = event.subject.x;\n      event.subject.fy = event.subject.y;\n    }\n\n    function dragged(event: any) {\n      event.subject.fx = event.x;\n      event.subject.fy = event.y;\n    }\n\n    function dragended(event: any) {\n      if (!event.active) simulation.alphaTarget(0);\n      event.subject.fx = null;\n      event.subject.fy = null;\n    }\n\n    return () => simulation.stop();\n  }, [nodes, links]);\n\n  return (\n    <div className=\"bg-slate-100 rounded-xl p-4 border border-slate-200 shadow-inner\">\n      <div className=\"flex justify-between items-center mb-4\">\n        <h4 className=\"text-sm font-semibold text-slate-500 uppercase tracking-wider\">Interactive Memory Diagram</h4>\n        <div className=\"flex gap-4 text-xs\">\n          <span className=\"flex items-center gap-1\"><div className=\"w-3 h-0.5 bg-red-500\"></div> Strong</span>\n          <span className=\"flex items-center gap-1\"><div className=\"w-3 h-0.5 bg-emerald-500 border-dashed border-t border-emerald-500\"></div> Weak/Unowned</span>\n        </div>\n      </div>\n      <svg ref={svgRef} className=\"w-full h-[400px]\"></svg>\n    </div>\n  );\n};\n\nexport default MemoryDiagram;\n"
+            }
+          ]
+        },
+        {
+          "path": "components/MarkdownRenderer.tsx",
+          "generationType": 0,
+          "isDone": true,
+          "description": "A simple component to render AI markdown output with consistent styling.",
+          "diffs": [
+            {
+              "target": "",
+              "replacement": "\nimport React from 'react';\n\ninterface MarkdownRendererProps {\n  content: string;\n}\n\nconst MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {\n  // Simple regex-based markdown parser for demo purposes\n  // In a real app, use a library like 'react-markdown'\n  const parseMarkdown = (text: string) => {\n    let processed = text\n      .replace(/^### (.*$)/gim, '<h3>$1</h3>')\n      .replace(/^## (.*$)/gim, '<h2>$1</h2>')\n      .replace(/^# (.*$)/gim, '<h1>$1</h1>')\n      .replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>')\n      .replace(/\\*(.*?)\\*/g, '<em>$1</em>')\n      .replace(/`([^`]+)`/g, '<code>$1</code>')\n      .replace(/^\\- (.*$)/gim, '<ul><li>$1</li></ul>')\n      .replace(/<\\/ul>\\n<ul>/gim, '')\n      .replace(/\\n\\n/g, '</p><p>')\n      .replace(/```swift([\\s\\S]*?)```/g, '<pre><code class=\"language-swift\">$1</code></pre>');\n\n    return `<p>${processed}</p>`;\n  };\n\n  return (\n    <div \n      className=\"markdown-content\"\n      dangerouslySetInnerHTML={{ __html: parseMarkdown(content) }}\n    />\n  );\n};\n\nexport default MarkdownRenderer;\n"
+            }
+          ]
+        },
+        {
+          "path": "App.tsx",
+          "generationType": 0,
+          "isDone": true,
+          "description": "Main application component managing state, layout, and user interaction.",
+          "diffs": [
+            {
+              "target": "",
+              "replacement": "\nimport React, { useState, useCallback } from 'react';\nimport { TOPICS } from './constants';\nimport { Topic, DeepDiveResponse } from './types';\nimport { getDeepDive } from './services/geminiService';\nimport MemoryDiagram from './components/MemoryDiagram';\nimport MarkdownRenderer from './components/MarkdownRenderer';\n\nconst App: React.FC = () => {\n  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);\n  const [loading, setLoading] = useState(false);\n  const [response, setResponse] = useState<DeepDiveResponse | null>(null);\n  const [error, setError] = useState<string | null>(null);\n\n  const handleTopicClick = useCallback(async (topic: Topic) => {\n    setSelectedTopic(topic);\n    setLoading(true);\n    setResponse(null);\n    setError(null);\n    try {\n      const data = await getDeepDive(topic.query);\n      setResponse(data);\n    } catch (err) {\n      console.error(err);\n      setError(\"Failed to load deep dive. Please ensure your API key is correct.\");\n    } finally {\n      setLoading(false);\n    }\n  }, []);\n\n  return (\n    <div className=\"min-h-screen bg-slate-50 flex flex-col md:flex-row\">\n      {/* Sidebar */}\n      <aside className=\"w-full md:w-80 bg-white border-r border-slate-200 p-6 md:sticky md:top-0 md:h-screen overflow-y-auto\">\n        <div className=\"flex items-center gap-3 mb-8\">\n          <div className=\"bg-indigo-600 w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg\">\n            S\n          </div>\n          <div>\n            <h1 className=\"font-bold text-slate-800 tracking-tight\">iOS Deep Diver</h1>\n            <p className=\"text-xs text-slate-400 font-medium\">SENIOR CONCEPT EXPLORER</p>\n          </div>\n        </div>\n\n        <nav className=\"space-y-2\">\n          {TOPICS.map((topic) => (\n            <button\n              key={topic.id}\n              onClick={() => handleTopicClick(topic)}\n              className={`w-full text-left p-4 rounded-xl transition-all duration-200 border flex items-start gap-4 ${\n                selectedTopic?.id === topic.id\n                  ? 'bg-indigo-50 border-indigo-200 ring-2 ring-indigo-500/10'\n                  : 'bg-white border-transparent hover:border-slate-200 hover:bg-slate-50'\n              }`}\n            >\n              <span className=\"text-2xl pt-1\">{topic.icon}</span>\n              <div>\n                <h3 className={`font-semibold text-sm ${selectedTopic?.id === topic.id ? 'text-indigo-700' : 'text-slate-700'}`}>\n                  {topic.title}\n                </h3>\n                <p className=\"text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed\">\n                  {topic.description}\n                </p>\n              </div>\n            </button>\n          ))}\n        </nav>\n\n        <div className=\"mt-12 p-4 bg-slate-900 rounded-xl text-white shadow-xl relative overflow-hidden group\">\n          <div className=\"absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110\"></div>\n          <h4 className=\"text-sm font-bold mb-2\">Pro Tip</h4>\n          <p className=\"text-xs text-slate-400 leading-relaxed\">\n            Select a topic to generate a comprehensive technical deep-dive with diagrams.\n          </p>\n        </div>\n      </aside>\n\n      {/* Main Content Area */}\n      <main className=\"flex-1 overflow-y-auto p-4 md:p-12\">\n        {!selectedTopic ? (\n          <div className=\"h-full flex flex-col items-center justify-center text-center max-w-md mx-auto\">\n            <div className=\"w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mb-6 animate-pulse\">\n              <svg className=\"w-10 h-10 text-indigo-600\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253\" />\n              </svg>\n            </div>\n            <h2 className=\"text-2xl font-bold text-slate-800 mb-2\">Ready to Level Up?</h2>\n            <p className=\"text-slate-500\">\n              Pick a complex iOS engineering concept from the sidebar to start a deep-dive analysis.\n            </p>\n          </div>\n        ) : (\n          <div className=\"max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500\">\n            {/* Header */}\n            <header className=\"border-b border-slate-200 pb-8\">\n              <div className=\"flex items-center gap-3 mb-2\">\n                <span className=\"px-2 py-1 bg-indigo-100 text-indigo-700 rounded text-[10px] font-bold uppercase tracking-wider\">Swift Exploration</span>\n                <span className=\"text-slate-300\">•</span>\n                <span className=\"text-xs text-slate-500 font-medium\">{selectedTopic.id.toUpperCase()}</span>\n              </div>\n              <h2 className=\"text-4xl font-extrabold text-slate-900 tracking-tight\">{selectedTopic.title}</h2>\n              <p className=\"text-slate-500 mt-2 text-lg\">{selectedTopic.description}</p>\n            </header>\n\n            {/* Content Loading State */}\n            {loading ? (\n              <div className=\"space-y-6\">\n                <div className=\"h-4 bg-slate-200 rounded w-3/4 animate-pulse\"></div>\n                <div className=\"h-4 bg-slate-200 rounded w-full animate-pulse\"></div>\n                <div className=\"h-32 bg-slate-200 rounded w-full animate-pulse\"></div>\n                <div className=\"h-4 bg-slate-200 rounded w-2/3 animate-pulse\"></div>\n                <div className=\"flex flex-col items-center py-12\">\n                  <div className=\"w-12 h-12 border-4 border-indigo-600/20 border-t-indigo-600 rounded-full animate-spin\"></div>\n                  <p className=\"text-sm text-slate-400 mt-4 font-medium italic\">Gemini is synthesizing a senior-level explanation...</p>\n                </div>\n              </div>\n            ) : error ? (\n              <div className=\"bg-red-50 border border-red-200 p-6 rounded-2xl text-red-700\">\n                <div className=\"flex items-center gap-3 mb-2\">\n                  <svg className=\"w-6 h-6\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n                    <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z\" />\n                  </svg>\n                  <h3 className=\"font-bold\">An error occurred</h3>\n                </div>\n                <p>{error}</p>\n              </div>\n            ) : response && (\n              <div className=\"space-y-12\">\n                {/* Diagram Section */}\n                {response.diagramData && (\n                  <div className=\"space-y-4\">\n                    <h3 className=\"text-lg font-bold text-slate-800 flex items-center gap-2\">\n                      <svg className=\"w-5 h-5 text-indigo-500\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n                        <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.172-1.172a4 4 0 015.656 0l1.172 1.172a4 4 0 010 5.656l-1.172 1.172a4 4 0 01-5.656 0L11 11.657\" />\n                      </svg>\n                      Visual Architecture\n                    </h3>\n                    <MemoryDiagram \n                      nodes={response.diagramData.nodes} \n                      links={response.diagramData.links} \n                    />\n                  </div>\n                )}\n\n                {/* Textual Content */}\n                <article className=\"prose prose-slate max-w-none pb-24\">\n                  <MarkdownRenderer content={response.content} />\n                </article>\n              </div>\n            )}\n          </div>\n        )}\n      </main>\n\n      {/* Footer Info */}\n      <footer className=\"fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur border-t border-slate-200 py-3 px-6 text-center text-[10px] text-slate-400 font-medium tracking-widest uppercase md:left-80\">\n        Engineered with Gemini 3 Flash & Tailwind CSS\n      </footer>\n    </div>\n  );\n};\n\nexport default App;\n"
+            }
+          ]
+        }
+      ]
+    },
+    "createdTimestamp": {
+      "seconds": 1770920838,
+      "nanos": 823000000
+    },
+    "doneTimestamp": {
+      "seconds": 1770920839,
+      "nanos": 132000000
+    }
+  }
+]
