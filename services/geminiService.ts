@@ -1,13 +1,19 @@
-
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 import { DeepDiveResponse } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+const API_KEYS = [
+  import.meta.env.VITE_GEMINI_API_KEY_1,
+  import.meta.env.VITE_GEMINI_API_KEY_2,
+  import.meta.env.VITE_GEMINI_API_KEY_3,
+].filter(Boolean) as string[];
 
-export const getDeepDive = async (topicQuery: string): Promise<DeepDiveResponse> => {
-  const model = 'gemini-3-flash-preview';
-  
-  const systemInstruction = `You are a world-class Senior iOS Engineer and Interview Coach with 15+ years at top companies like Apple, Airbnb, and Uber. Your job is to create the most thorough, practical, and memorable study material for iOS engineering interview preparation.
+if (API_KEYS.length === 0) {
+  console.error("[geminiService] No API keys loaded. Check that .env has VITE_GEMINI_API_KEY_1/2/3 and the dev server was restarted after .env changes.");
+}
+
+let currentKeyIndex = 0;
+
+const SYSTEM_INSTRUCTION = `You are a world-class Senior iOS Engineer and Interview Coach with 15+ years at top companies like Apple, Airbnb, and Uber. Your job is to create the most thorough, practical, and memorable study material for iOS engineering interview preparation.
 
 Your response MUST be a valid JSON object with these fields:
 
@@ -84,17 +90,28 @@ Format: ["Mistake 1...", "Mistake 2...", "Mistake 3..."]
 ### "diagramData" field (OPTIONAL):
 Only include if the topic involves object relationships, memory graphs, or architectural flows (e.g., Retain Cycles, ARC, MVVM, Coordinator, Combine). For lifecycle topics use numbered steps in content instead.`;
 
-  const response = await ai.models.generateContent({
-    model,
-    contents: topicQuery,
-    config: {
-      systemInstruction,
-      temperature: 0.7,
-      responseMimeType: "application/json",
-    },
-  });
+async function attemptGenerate(topicQuery: string, keyIndex: number, attempts: number): Promise<DeepDiveResponse> {
+  if (API_KEYS.length === 0) {
+    throw new Error("No API keys configured. Add VITE_GEMINI_API_KEY_1 to your .env file and restart the dev server.");
+  }
+  if (attempts >= API_KEYS.length) {
+    throw new Error("All API keys are rate-limited. Please try again in a minute.");
+  }
+
+  const key = API_KEYS[keyIndex % API_KEYS.length];
+  const ai = new GoogleGenAI({ apiKey: key });
 
   try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-3-flash-preview',
+      contents: topicQuery,
+      config: {
+        systemInstruction: SYSTEM_INSTRUCTION,
+        temperature: 0.7,
+        responseMimeType: "application/json",
+      },
+    });
+
     const data = JSON.parse(response.text || "{}");
     return {
       content: data.content || "No explanation generated.",
@@ -107,14 +124,34 @@ Only include if the topic involves object relationships, memory graphs, or archi
       interviewTips: data.interviewTips || [],
       commonMistakes: data.commonMistakes || []
     };
-  } catch (e) {
-    console.error("Failed to parse Gemini response", e);
-    return {
-      content: response.text || "Error parsing response.",
-      quizQuestions: [],
-      codeExamples: [],
-      interviewTips: [],
-      commonMistakes: []
-    };
+  } catch (err: any) {
+    const status = err?.status ?? err?.httpStatusCode ?? err?.code ?? 0;
+    const message = (err?.message ?? '').toLowerCase();
+
+    console.error(`[geminiService] Key ${keyIndex % API_KEYS.length} error — status=${status} message=${err?.message}`);
+
+    // Only rotate on true rate-limit signals. 403 = invalid/unauthorized key — do NOT rotate.
+    const isRateLimited =
+      status === 429 ||
+      status === 'RESOURCE_EXHAUSTED' ||
+      message.includes('quota') ||
+      message.includes('rate limit') ||
+      message.includes('resource_exhausted') ||
+      message.includes('too many requests');
+
+    if (isRateLimited) {
+      console.warn(`[geminiService] Key ${keyIndex % API_KEYS.length} rate-limited, rotating to next key...`);
+      return attemptGenerate(topicQuery, keyIndex + 1, attempts + 1);
+    }
+
+    throw err;
   }
+}
+
+export const getDeepDive = async (topicQuery: string): Promise<DeepDiveResponse> => {
+  const startIndex = currentKeyIndex;
+  if (API_KEYS.length > 0) {
+    currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
+  }
+  return attemptGenerate(topicQuery, startIndex, 0);
 };

@@ -19,65 +19,99 @@ const QuizSection: React.FC<QuizSectionProps> = ({ questions }) => {
 
   const revealAnswer = (questionIndex: number) => {
     if (answers[questionIndex] === undefined) return;
-    setRevealed(prev => ({ ...prev, [questionIndex]: true }));
-    if (Object.keys(revealed).length + 1 === questions.length) {
-      setQuizComplete(true);
-    }
+    const newRevealed = { ...revealed, [questionIndex]: true };
+    setRevealed(newRevealed);
+    if (Object.keys(newRevealed).length === questions.length) setQuizComplete(true);
   };
 
-  const score = Object.entries(revealed).filter(([idx]) => 
+  const score = Object.entries(revealed).filter(([idx]) =>
     answers[parseInt(idx)] === questions[parseInt(idx)].correctIndex
   ).length;
 
-  const resetQuiz = () => {
-    setAnswers({});
-    setRevealed({});
-    setQuizComplete(false);
-  };
+  const resetQuiz = () => { setAnswers({}); setRevealed({}); setQuizComplete(false); };
 
   return (
-    <div className="mt-8">
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-2xl">🧠</span>
-        <h2 className="text-xl font-bold text-slate-800">Interview Quiz</h2>
-        <span className="text-sm text-slate-500 ml-2">Test your understanding</span>
+    <div className="space-y-5">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-base font-black text-slate-200">Interview Quiz</h2>
+          <p className="text-xs text-slate-600 mt-0.5">Test your real understanding</p>
+        </div>
         {Object.keys(revealed).length > 0 && (
-          <span className="ml-auto text-sm font-semibold text-blue-600">
-            Score: {score}/{Object.keys(revealed).length}
-          </span>
+          <div
+            className="px-3 py-1.5 rounded-xl text-xs font-black"
+            style={{ background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', color: '#60a5fa' }}
+          >
+            Score: {score} / {Object.keys(revealed).length}
+          </div>
         )}
       </div>
 
-      <div className="space-y-6">
+      {/* Questions */}
+      <div className="space-y-4">
         {questions.map((q, qi) => {
           const selectedAnswer = answers[qi];
           const isRevealed = revealed[qi];
           const isCorrect = selectedAnswer === q.correctIndex;
 
+          const cardBorder = isRevealed
+            ? isCorrect ? 'rgba(34,197,94,0.25)' : 'rgba(239,68,68,0.25)'
+            : 'rgba(255,255,255,0.05)';
+          const cardBg = isRevealed
+            ? isCorrect ? 'rgba(34,197,94,0.04)' : 'rgba(239,68,68,0.04)'
+            : 'rgba(255,255,255,0.02)';
+
           return (
-            <div key={qi} className={`rounded-xl border-2 p-5 transition-all ${
-              isRevealed 
-                ? isCorrect ? 'border-green-300 bg-green-50' : 'border-red-300 bg-red-50'
-                : 'border-slate-200 bg-white'
-            }`}>
-              <p className="font-semibold text-slate-800 mb-4">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold mr-2">{qi + 1}</span>
+            <div
+              key={qi}
+              className="rounded-2xl p-5 transition-all duration-300"
+              style={{ background: cardBg, border: `1px solid ${cardBorder}` }}
+            >
+              {/* Question */}
+              <p className="font-semibold text-slate-200 text-sm mb-4 leading-relaxed flex items-start gap-3">
+                <span
+                  className="inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-black flex-shrink-0 mt-0.5"
+                  style={{ background: 'rgba(59,130,246,0.2)', border: '1px solid rgba(59,130,246,0.3)', color: '#60a5fa' }}
+                >
+                  {qi + 1}
+                </span>
                 {q.question}
               </p>
-              
+
+              {/* Options */}
               <div className="space-y-2 mb-4">
                 {q.options.map((option, oi) => {
-                  let optionStyle = 'border-slate-200 bg-white hover:bg-slate-50 cursor-pointer';
-                  if (selectedAnswer === oi && !isRevealed) {
-                    optionStyle = 'border-blue-400 bg-blue-50 cursor-pointer';
+                  let bg = 'rgba(255,255,255,0.02)';
+                  let border = 'rgba(255,255,255,0.06)';
+                  let textColor = 'text-slate-400';
+                  let cursor = 'cursor-pointer';
+                  let dotBg = 'rgba(255,255,255,0.06)';
+                  let dotText = 'text-slate-600';
+
+                  if (!isRevealed && selectedAnswer === oi) {
+                    bg = 'rgba(59,130,246,0.08)';
+                    border = 'rgba(59,130,246,0.35)';
+                    textColor = 'text-slate-200';
+                    dotBg = '#3b82f6';
+                    dotText = 'text-white';
                   }
                   if (isRevealed) {
+                    cursor = 'cursor-default';
                     if (oi === q.correctIndex) {
-                      optionStyle = 'border-green-400 bg-green-100 cursor-default';
+                      bg = 'rgba(34,197,94,0.08)';
+                      border = 'rgba(34,197,94,0.3)';
+                      textColor = 'text-emerald-300';
+                      dotBg = '#22c55e';
+                      dotText = 'text-white';
                     } else if (oi === selectedAnswer) {
-                      optionStyle = 'border-red-400 bg-red-100 cursor-default';
+                      bg = 'rgba(239,68,68,0.08)';
+                      border = 'rgba(239,68,68,0.25)';
+                      textColor = 'text-rose-400';
+                      dotBg = '#ef4444';
+                      dotText = 'text-white';
                     } else {
-                      optionStyle = 'border-slate-200 bg-slate-50 cursor-default opacity-60';
+                      textColor = 'text-slate-700';
                     }
                   }
 
@@ -85,37 +119,60 @@ const QuizSection: React.FC<QuizSectionProps> = ({ questions }) => {
                     <div
                       key={oi}
                       onClick={() => handleAnswer(qi, oi)}
-                      className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${optionStyle}`}
+                      className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-200 ${textColor} ${cursor}`}
+                      style={{ background: bg, borderColor: border }}
                     >
-                      <span className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold flex-shrink-0 ${
-                        selectedAnswer === oi && !isRevealed ? 'border-blue-500 bg-blue-500 text-white' :
-                        isRevealed && oi === q.correctIndex ? 'border-green-500 bg-green-500 text-white' :
-                        isRevealed && oi === selectedAnswer ? 'border-red-500 bg-red-500 text-white' :
-                        'border-slate-300 text-slate-500'
-                      }`}>
+                      <span
+                        className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black flex-shrink-0 ${dotText}`}
+                        style={{ background: dotBg }}
+                      >
                         {String.fromCharCode(65 + oi)}
                       </span>
-                      <span className="text-sm text-slate-700">{option}</span>
-                      {isRevealed && oi === q.correctIndex && <span className="ml-auto text-green-600">✓</span>}
-                      {isRevealed && oi === selectedAnswer && oi !== q.correctIndex && <span className="ml-auto text-red-600">✗</span>}
+                      <span className="text-xs leading-relaxed">{option}</span>
+                      {isRevealed && oi === q.correctIndex && (
+                        <svg className="w-4 h-4 text-emerald-400 ml-auto flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                      {isRevealed && oi === selectedAnswer && oi !== q.correctIndex && (
+                        <svg className="w-4 h-4 text-rose-400 ml-auto flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      )}
                     </div>
                   );
                 })}
               </div>
 
-              {!isRevealed && (
+              {/* Check / Explanation */}
+              {!isRevealed ? (
                 <button
                   onClick={() => revealAnswer(qi)}
                   disabled={selectedAnswer === undefined}
-                  className="text-sm px-4 py-2 rounded-lg bg-blue-600 text-white font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+                  className="text-xs px-4 py-2 rounded-xl font-bold transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+                  style={
+                    selectedAnswer !== undefined
+                      ? {
+                          background: 'linear-gradient(135deg, #2563eb, #3b82f6)',
+                          color: '#fff',
+                          boxShadow: '0 0 12px rgba(59,130,246,0.3)',
+                        }
+                      : { background: 'rgba(255,255,255,0.05)', color: '#475569' }
+                  }
                 >
                   Check Answer
                 </button>
-              )}
-
-              {isRevealed && (
-                <div className={`mt-3 p-3 rounded-lg text-sm ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                  <strong>{isCorrect ? '✅ Correct!' : '❌ Not quite.'}</strong> {q.explanation}
+              ) : (
+                <div
+                  className="mt-1 p-3.5 rounded-xl text-xs leading-relaxed"
+                  style={{
+                    background: isCorrect ? 'rgba(34,197,94,0.06)' : 'rgba(239,68,68,0.06)',
+                    border: `1px solid ${isCorrect ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)'}`,
+                    color: isCorrect ? '#86efac' : '#fca5a5',
+                  }}
+                >
+                  <span className="font-black">{isCorrect ? '✓ Correct! ' : '✗ Not quite. '}</span>
+                  {q.explanation}
                 </div>
               )}
             </div>
@@ -123,16 +180,38 @@ const QuizSection: React.FC<QuizSectionProps> = ({ questions }) => {
         })}
       </div>
 
+      {/* Quiz Complete Banner */}
       {quizComplete && (
-        <div className="mt-6 p-5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-center">
-          <div className="text-3xl mb-2">{score === questions.length ? '🏆' : score >= questions.length / 2 ? '👍' : '📚'}</div>
-          <p className="text-lg font-bold">Quiz Complete! Score: {score}/{questions.length}</p>
-          <p className="text-sm opacity-80 mt-1">
-            {score === questions.length ? 'Perfect score! You really know this topic.' : 
-             score >= questions.length / 2 ? 'Good understanding. Review the missed questions.' :
-             'Keep studying. Re-read the deep dive above.'}
+        <div
+          className="p-6 rounded-2xl text-center animate-scale-in"
+          style={{
+            background: 'linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(109,40,217,0.15) 100%)',
+            border: '1px solid rgba(99,102,241,0.2)',
+            boxShadow: '0 0 40px rgba(59,130,246,0.1)',
+          }}
+        >
+          <div className="text-3xl mb-2">
+            {score === questions.length ? '🏆' : score >= questions.length / 2 ? '👍' : '📚'}
+          </div>
+          <p className="text-lg font-black gradient-text mb-1">
+            {score} / {questions.length} Correct
           </p>
-          <button onClick={resetQuiz} className="mt-3 px-4 py-2 bg-white text-blue-600 rounded-lg text-sm font-semibold hover:bg-blue-50 transition-colors">
+          <p className="text-xs text-slate-500 mb-4">
+            {score === questions.length
+              ? 'Perfect! You really know this topic.'
+              : score >= questions.length / 2
+              ? 'Good understanding. Review the missed ones.'
+              : 'Keep studying — re-read the deep dive above.'}
+          </p>
+          <button
+            onClick={resetQuiz}
+            className="px-5 py-2 rounded-xl text-xs font-black transition-all duration-200"
+            style={{
+              background: 'rgba(59,130,246,0.15)',
+              border: '1px solid rgba(59,130,246,0.25)',
+              color: '#60a5fa',
+            }}
+          >
             Retake Quiz
           </button>
         </div>
