@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "vercel dev",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit"
@@ -28,6 +29,7 @@
     "@vercel/node": "^5.6.21",
     "@vitejs/plugin-react": "^5.0.0",
     "typescript": "~5.8.2",
+    "vercel": "^50.37.1",
     "vite": "^6.2.0"
   }
 }
