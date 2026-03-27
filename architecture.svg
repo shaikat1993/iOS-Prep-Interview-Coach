@@ -1,0 +1,267 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 540" width="860" height="540" style="font-family: 'JetBrains Mono', 'Fira Code', monospace;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#08090e"/>
+      <stop offset="100%" style="stop-color:#0d0f1a"/>
+    </linearGradient>
+    <linearGradient id="browserGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f"/>
+      <stop offset="100%" style="stop-color:#1a2d4a"/>
+    </linearGradient>
+    <linearGradient id="vercelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1f35"/>
+      <stop offset="100%" style="stop-color:#131729"/>
+    </linearGradient>
+    <linearGradient id="geminiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a2a1a"/>
+      <stop offset="100%" style="stop-color:#152015"/>
+    </linearGradient>
+    <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="glow-blue">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-green">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="card-shadow">
+      <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#3b82f6" flood-opacity="0.15"/>
+    </filter>
+    <filter id="card-shadow-green">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#22c55e" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowhead-return" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="540" fill="url(#bgGrad)" rx="16"/>
+
+  <!-- Subtle grid lines -->
+  <g opacity="0.04" stroke="#ffffff" stroke-width="0.5">
+    <line x1="0" y1="90" x2="860" y2="90"/>
+    <line x1="0" y1="180" x2="860" y2="180"/>
+    <line x1="0" y1="270" x2="860" y2="270"/>
+    <line x1="0" y1="360" x2="860" y2="360"/>
+    <line x1="0" y1="450" x2="860" y2="450"/>
+    <line x1="100" y1="0" x2="100" y2="540"/>
+    <line x1="250" y1="0" x2="250" y2="540"/>
+    <line x1="430" y1="0" x2="430" y2="540"/>
+    <line x1="610" y1="0" x2="610" y2="540"/>
+    <line x1="760" y1="0" x2="760" y2="540"/>
+  </g>
+
+  <!-- Title -->
+  <text x="430" y="38" text-anchor="middle" fill="#e2e8f0" font-size="15" font-weight="700" letter-spacing="2" font-family="'JetBrains Mono', monospace">iOS PREP — ARCHITECTURE</text>
+  <line x1="200" y1="48" x2="660" y2="48" stroke="#3b82f6" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- COLUMN 1: Browser -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <!-- Browser card -->
+  <rect x="30" y="70" width="200" height="400" rx="14" fill="url(#browserGrad)" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.35" filter="url(#card-shadow)"/>
+
+  <!-- Browser header bar -->
+  <rect x="30" y="70" width="200" height="36" rx="14" fill="#1d3a5f" opacity="0.8"/>
+  <rect x="30" y="90" width="200" height="16" fill="#1d3a5f" opacity="0.8"/>
+  <!-- Traffic lights -->
+  <circle cx="52" cy="88" r="5" fill="#ef4444" opacity="0.8"/>
+  <circle cx="68" cy="88" r="5" fill="#f59e0b" opacity="0.8"/>
+  <circle cx="84" cy="88" r="5" fill="#22c55e" opacity="0.8"/>
+  <!-- URL bar -->
+  <rect x="98" y="81" width="118" height="14" rx="4" fill="#0f2240" opacity="0.7"/>
+  <text x="157" y="91" text-anchor="middle" fill="#60a5fa" font-size="7.5" font-family="monospace">ios-prep.vercel.app</text>
+
+  <!-- Browser label -->
+  <text x="130" y="133" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="700" letter-spacing="1">BROWSER</text>
+  <text x="130" y="149" text-anchor="middle" fill="#64748b" font-size="8.5">React SPA</text>
+
+  <!-- Divider -->
+  <line x1="50" y1="158" x2="210" y2="158" stroke="#3b82f6" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- React component pills -->
+  <rect x="48" y="166" width="164" height="22" rx="6" fill="#0f1e3a" stroke="#3b82f6" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="130" y="181" text-anchor="middle" fill="#7dd3fc" font-size="8.5">App.tsx</text>
+
+  <rect x="48" y="194" width="76" height="22" rx="6" fill="#0f1e3a" stroke="#3b82f6" stroke-width="0.5" stroke-opacity="0.25"/>
+  <text x="86" y="209" text-anchor="middle" fill="#94a3b8" font-size="8">QuizSection</text>
+
+  <rect x="132" y="194" width="80" height="22" rx="6" fill="#0f1e3a" stroke="#3b82f6" stroke-width="0.5" stroke-opacity="0.25"/>
+  <text x="172" y="209" text-anchor="middle" fill="#94a3b8" font-size="8">CodeExamples</text>
+
+  <rect x="48" y="222" width="76" height="22" rx="6" fill="#0f1e3a" stroke="#3b82f6" stroke-width="0.5" stroke-opacity="0.25"/>
+  <text x="86" y="237" text-anchor="middle" fill="#94a3b8" font-size="8">MemoryDiagram</text>
+
+  <rect x="132" y="222" width="80" height="22" rx="6" fill="#0f1e3a" stroke="#3b82f6" stroke-width="0.5" stroke-opacity="0.25"/>
+  <text x="172" y="237" text-anchor="middle" fill="#94a3b8" font-size="8">InterviewTips</text>
+
+  <!-- Divider -->
+  <line x1="50" y1="254" x2="210" y2="254" stroke="#3b82f6" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- geminiService.ts -->
+  <rect x="48" y="262" width="164" height="40" rx="8" fill="#0a1628" stroke="#6366f1" stroke-width="0.8" stroke-opacity="0.5"/>
+  <text x="130" y="279" text-anchor="middle" fill="#a5b4fc" font-size="8.5" font-weight="600">geminiService.ts</text>
+  <text x="130" y="294" text-anchor="middle" fill="#475569" font-size="7.5">fetch('/api/generate')</text>
+
+  <!-- Firebase pill -->
+  <rect x="48" y="312" width="164" height="32" rx="8" fill="#1c1408" stroke="#f59e0b" stroke-width="0.8" stroke-opacity="0.4"/>
+  <text x="130" y="326" text-anchor="middle" fill="#fbbf24" font-size="8.5" font-weight="600">firebase.ts</text>
+  <text x="130" y="339" text-anchor="middle" fill="#78350f" font-size="7.5">Firestore visitor counter</text>
+
+  <!-- Lock badge -->
+  <rect x="48" y="355" width="164" height="26" rx="6" fill="#070d1a" stroke="#1e3a5f" stroke-width="0.5"/>
+  <text x="130" y="371" text-anchor="middle" fill="#334155" font-size="7.5">🔒 API keys NOT accessible</text>
+
+  <!-- Browser label bottom -->
+  <text x="130" y="452" text-anchor="middle" fill="#1e3a5f" font-size="30" font-weight="900" opacity="0.15">{'</>'}</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- ARROWS: Browser → Vercel -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <!-- POST arrow down-right -->
+  <line x1="230" y1="282" x2="318" y2="282" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead)" filter="url(#glow-blue)"/>
+  <rect x="234" y="268" width="80" height="14" rx="3" fill="#0a0d1a"/>
+  <text x="274" y="279" text-anchor="middle" fill="#60a5fa" font-size="7.5" font-weight="600">POST /api/generate</text>
+  <text x="274" y="295" text-anchor="middle" fill="#334155" font-size="7">&#123; topicQuery &#125;</text>
+
+  <!-- Return arrow -->
+  <line x1="318" y1="308" x2="230" y2="308" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)" filter="url(#glow-green)"/>
+  <rect x="234" y="312" width="80" height="14" rx="3" fill="#0a0d1a"/>
+  <text x="274" y="322" text-anchor="middle" fill="#4ade80" font-size="7.5">DeepDiveResponse</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- COLUMN 2: Vercel -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <rect x="320" y="70" width="220" height="400" rx="14" fill="url(#vercelGrad)" stroke="#6366f1" stroke-width="1" stroke-opacity="0.35" filter="url(#card-shadow)"/>
+
+  <!-- Vercel logo area -->
+  <text x="430" y="108" text-anchor="middle" fill="#a5b4fc" font-size="11" font-weight="700" letter-spacing="1">VERCEL SERVERLESS</text>
+  <text x="430" y="124" text-anchor="middle" fill="#475569" font-size="8.5">api/generate.ts · Node.js Runtime</text>
+
+  <line x1="340" y1="133" x2="520" y2="133" stroke="#6366f1" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- ENV VARS box -->
+  <rect x="338" y="141" width="184" height="72" rx="8" fill="#0d0f1f" stroke="#6366f1" stroke-width="0.8" stroke-opacity="0.4"/>
+  <text x="430" y="158" text-anchor="middle" fill="#818cf8" font-size="8.5" font-weight="700">🔐 SERVER ENV VARS</text>
+  <text x="430" y="173" text-anchor="middle" fill="#4ade80" font-size="7.5" font-family="monospace">GEMINI_API_KEY_1 = ••••••</text>
+  <text x="430" y="187" text-anchor="middle" fill="#4ade80" font-size="7.5" font-family="monospace">GEMINI_API_KEY_2 = ••••••</text>
+  <text x="430" y="201" text-anchor="middle" fill="#4ade80" font-size="7.5" font-family="monospace">GEMINI_API_KEY_3 = ••••••</text>
+
+  <!-- Key Rotation logic -->
+  <rect x="338" y="222" width="184" height="80" rx="8" fill="#0d0f1f" stroke="#6366f1" stroke-width="0.8" stroke-opacity="0.3"/>
+  <text x="430" y="239" text-anchor="middle" fill="#a5b4fc" font-size="8.5" font-weight="700">KEY ROTATION LOGIC</text>
+  <line x1="352" y1="244" x2="508" y2="244" stroke="#6366f1" stroke-width="0.3" opacity="0.3"/>
+
+  <!-- rotation flow -->
+  <rect x="346" y="250" width="48" height="18" rx="4" fill="#1a1f35" stroke="#4ade80" stroke-width="0.7"/>
+  <text x="370" y="262" text-anchor="middle" fill="#4ade80" font-size="7">Key 1 ✓</text>
+
+  <line x1="394" y1="259" x2="406" y2="259" stroke="#6366f1" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrowhead)"/>
+
+  <rect x="406" y="250" width="48" height="18" rx="4" fill="#1a1f35" stroke="#f59e0b" stroke-width="0.7"/>
+  <text x="430" y="262" text-anchor="middle" fill="#f59e0b" font-size="7">429 → K2</text>
+
+  <line x1="454" y1="259" x2="466" y2="259" stroke="#6366f1" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrowhead)"/>
+
+  <rect x="466" y="250" width="48" height="18" rx="4" fill="#1a1f35" stroke="#f59e0b" stroke-width="0.7"/>
+  <text x="490" y="262" text-anchor="middle" fill="#f59e0b" font-size="7">429 → K3</text>
+
+  <text x="430" y="283" text-anchor="middle" fill="#475569" font-size="7">Rotates on 429 / RESOURCE_EXHAUSTED</text>
+  <text x="430" y="295" text-anchor="middle" fill="#475569" font-size="7">Stops on 403 (invalid key)</text>
+
+  <!-- Request validation -->
+  <rect x="338" y="312" width="184" height="44" rx="8" fill="#0d0f1f" stroke="#6366f1" stroke-width="0.5" stroke-opacity="0.25"/>
+  <text x="430" y="328" text-anchor="middle" fill="#94a3b8" font-size="8.5" font-weight="600">REQUEST VALIDATION</text>
+  <text x="430" y="342" text-anchor="middle" fill="#475569" font-size="7.5">POST only · topicQuery required</text>
+  <text x="430" y="353" text-anchor="middle" fill="#475569" font-size="7">Returns 400 / 405 on bad input</text>
+
+  <!-- system instruction -->
+  <rect x="338" y="366" width="184" height="32" rx="8" fill="#0d0f1f" stroke="#6366f1" stroke-width="0.5" stroke-opacity="0.2"/>
+  <text x="430" y="381" text-anchor="middle" fill="#64748b" font-size="8">SYSTEM INSTRUCTION</text>
+  <text x="430" y="393" text-anchor="middle" fill="#475569" font-size="7">Senior iOS Engineer persona · JSON schema</text>
+
+  <!-- Vercel label -->
+  <text x="430" y="452" text-anchor="middle" fill="#1e1f3a" font-size="28" font-weight="900" opacity="0.2">▲</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- ARROWS: Vercel → Gemini -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <line x1="540" y1="260" x2="618" y2="260" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead)" filter="url(#glow-blue)"/>
+  <rect x="544" y="247" width="70" height="14" rx="3" fill="#0a0d1a"/>
+  <text x="579" y="257" text-anchor="middle" fill="#60a5fa" font-size="7.5">Gemini API call</text>
+  <text x="579" y="278" text-anchor="middle" fill="#334155" font-size="7">model + key + prompt</text>
+
+  <line x1="618" y1="290" x2="540" y2="290" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-return)" filter="url(#glow-green)"/>
+  <rect x="544" y="293" width="70" height="14" rx="3" fill="#0a0d1a"/>
+  <text x="579" y="303" text-anchor="middle" fill="#4ade80" font-size="7.5">JSON response</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- COLUMN 3: Gemini -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <rect x="620" y="70" width="210" height="400" rx="14" fill="url(#geminiGrad)" stroke="#22c55e" stroke-width="1" stroke-opacity="0.3" filter="url(#card-shadow-green)"/>
+
+  <text x="725" y="108" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700" letter-spacing="1">GOOGLE GEMINI AI</text>
+  <text x="725" y="124" text-anchor="middle" fill="#475569" font-size="8.5">gemini-3-flash-preview</text>
+
+  <line x1="640" y1="133" x2="810" y2="133" stroke="#22c55e" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Response fields -->
+  <rect x="638" y="141" width="174" height="200" rx="8" fill="#0a110a" stroke="#22c55e" stroke-width="0.8" stroke-opacity="0.3"/>
+  <text x="725" y="158" text-anchor="middle" fill="#86efac" font-size="8.5" font-weight="700">DeepDiveResponse JSON</text>
+  <line x1="650" y1="163" x2="800" y2="163" stroke="#22c55e" stroke-width="0.3" opacity="0.25"/>
+
+  <!-- Response items -->
+  <rect x="648" y="169" width="154" height="14" rx="3" fill="#0d1a0d"/>
+  <text x="652" y="180" fill="#4ade80" font-size="7.5" font-family="monospace">  content: "## 🎯 The Core..."</text>
+
+  <rect x="648" y="187" width="154" height="14" rx="3" fill="#0d1a0d"/>
+  <text x="652" y="198" fill="#4ade80" font-size="7.5" font-family="monospace">  quizQuestions: [4 items]</text>
+
+  <rect x="648" y="205" width="154" height="14" rx="3" fill="#0d1a0d"/>
+  <text x="652" y="216" fill="#4ade80" font-size="7.5" font-family="monospace">  codeExamples: [3 items]</text>
+
+  <rect x="648" y="223" width="154" height="14" rx="3" fill="#0d1a0d"/>
+  <text x="652" y="234" fill="#4ade80" font-size="7.5" font-family="monospace">  interviewTips: [4 items]</text>
+
+  <rect x="648" y="241" width="154" height="14" rx="3" fill="#0d1a0d"/>
+  <text x="652" y="252" fill="#4ade80" font-size="7.5" font-family="monospace">  commonMistakes: [3 items]</text>
+
+  <rect x="648" y="259" width="154" height="14" rx="3" fill="#0d1a0d"/>
+  <text x="652" y="270" fill="#94a3b8" font-size="7.5" font-family="monospace">  diagramData?: &#123; nodes, links &#125;</text>
+
+  <rect x="648" y="277" width="154" height="14" rx="3" fill="#0d1a0d"/>
+  <text x="652" y="288" fill="#94a3b8" font-size="7.5" font-family="monospace">  responseMimeType: "json"</text>
+
+  <rect x="648" y="295" width="154" height="14" rx="3" fill="#0d1a0d"/>
+  <text x="652" y="306" fill="#94a3b8" font-size="7.5" font-family="monospace">  temperature: 0.7</text>
+
+  <!-- Model badge -->
+  <rect x="638" y="352" width="174" height="36" rx="8" fill="#0a110a" stroke="#22c55e" stroke-width="0.5" stroke-opacity="0.25"/>
+  <text x="725" y="367" text-anchor="middle" fill="#64748b" font-size="8">FREE TIER QUOTA</text>
+  <text x="725" y="381" text-anchor="middle" fill="#475569" font-size="7.5">15 RPM · 1500 req/day per project</text>
+
+  <!-- Gemini label -->
+  <text x="725" y="452" text-anchor="middle" fill="#0d2a0d" font-size="28" font-weight="900" opacity="0.3">✦</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- BOTTOM SECURITY BANNER -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <rect x="30" y="482" width="800" height="42" rx="10" fill="#060810" stroke="#1e3a5f" stroke-width="0.8"/>
+  <text x="430" y="498" text-anchor="middle" fill="#334155" font-size="8.5" font-weight="600" letter-spacing="0.5">SECURITY MODEL</text>
+  <text x="430" y="514" text-anchor="middle" fill="#1e40af" font-size="8">🔒 API keys exist only in Vercel's encrypted environment · Never bundled into JS · Never sent to the browser</text>
+
+</svg>

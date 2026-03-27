@@ -48,22 +48,39 @@ Select any iOS topic and get a complete, production-quality study session genera
 
 ## Architecture
 
-```
-Browser (React SPA)
-    │
-    │  POST /api/generate  { topicQuery }
-    ▼
-Vercel Serverless Function  ← API keys live here (server-side only)
-    │
-    │  Gemini API call with key rotation
-    ▼
-Google Gemini AI
-    │
-    ▼
-DeepDiveResponse (JSON) → rendered in React
+![Architecture Diagram](architecture.svg)
+
+```mermaid
+flowchart LR
+    subgraph Browser["🌐 Browser (React SPA)"]
+        A[App.tsx] --> B[geminiService.ts]
+        A --> F[firebase.ts]
+    end
+
+    subgraph Vercel["▲ Vercel Serverless  —  api/generate.ts"]
+        direction TB
+        C["🔐 ENV: GEMINI_API_KEY_1/2/3\n(server-side only, never in bundle)"]
+        D["Key Rotation Logic\n429 → try next key\n403 → throw immediately"]
+        C --> D
+    end
+
+    subgraph Gemini["✦ Google Gemini AI"]
+        E["gemini-3-flash-preview\nreturns DeepDiveResponse JSON"]
+    end
+
+    B -- "POST /api/generate\n{ topicQuery }" --> Vercel
+    D -- "Gemini API call + key" --> Gemini
+    Gemini -- "JSON response" --> D
+    Vercel -- "DeepDiveResponse" --> B
+    F <--> Firestore[("🔥 Firestore\nVisitor Counter")]
+
+    style Browser fill:#0d1117,stroke:#3b82f6,color:#93c5fd
+    style Vercel fill:#0d0f1a,stroke:#6366f1,color:#a5b4fc
+    style Gemini fill:#0a110a,stroke:#22c55e,color:#86efac
+    style Firestore fill:#1c1408,stroke:#f59e0b,color:#fbbf24
 ```
 
-**API keys never reach the browser.** The serverless function holds `GEMINI_API_KEY_1/2/3` as server-side environment variables. Key rotation automatically falls back to the next key on rate limits.
+**API keys never reach the browser.** The serverless function holds `GEMINI_API_KEY_1/2/3` as server-side environment variables. Key rotation automatically falls back to the next key on rate limits (429), but stops and throws on invalid keys (403).
 
 ---
 
